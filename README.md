@@ -55,6 +55,8 @@ git clone https://github.com/wangzhizhou/KGraber.git
 
 * 应该保存网页为htm扩展名的文件`personal.htm`，这是因为脚本中对文件的读取已经写死。`Chrome`浏览器默认保存为`.htm`的文件。如果你使用其它的浏览器，保存文件后名字可能是`personal.html`，请把`html`修改为`htm`扩展名，便于脚本正常运行。文件名称固定为`personal`。
 
+* 在个人中心下拉加载全部音乐后，一定要把网页保存成为`全部网页`的格式，不能保存成html源码，因为全部音乐列表是通过javascript获得的，如果只保存成为`html`源码格式会导致`personal.htm`文件中的音乐列表不全，脚本也就只能下载到部分音乐了。
+
 * `install-deps.sh`脚本是用来安装python3解析`html`文本所需的第三方库`BeautifulSoup4`
 
 * `KGraber.py`的作用是从`personal.htm`中解析出用户音乐列表的下载地址和对应用文件名，运行结果保存	在生成的`playlist.txt`文件中。
