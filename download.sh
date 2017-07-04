@@ -9,6 +9,8 @@ mkdir -p songs
 cd songs
 rm *
 
+wait
+
 while read playurl title; do
     wget "$playurl" -O "$title"
 done < ../playlist.txt

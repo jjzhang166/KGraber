@@ -21,7 +21,7 @@ process = 0.0
 total = len(playlist)
 
 for item in playlist:
-	title=item.div.p.span.string
+	title=item.div.p.a.contents[-1]
 	title=title.strip()
 	url=item.a.attrs['href']
 	songPageHTML=request.urlopen(url).read()	
