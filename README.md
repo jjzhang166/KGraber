@@ -25,7 +25,7 @@ Email: 824219521@qq.com
 ```
 git clone https://github.com/wangzhizhou/KGraber.git
 ```
-### 2.登录全民K歌个人中心，获取全部音乐列表
+### 2.登录全民K歌个人中心，获取全部音乐列表(也可以下载他人的音乐，即使不登录，但要获得作品列表页)
 
 ![demo2.gif](./demos/demo2.gif)
 
