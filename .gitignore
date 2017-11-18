@@ -2,3 +2,5 @@
 songs/
 .vscode/
 *.egg-info/
+build/
+dist/

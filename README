@@ -16,12 +16,12 @@ Email: 824219521@qq.com
 - 项目目录下，依赖包安装： 
 
 	```
-	pip3 install -r requirements.txt
+	pip3 install -e .
 	```
 - 运行： 
 
 	```
-	python3 KGraber.py
+	KGraber
 	```
 	
 * 创建名为`songs`的目录保存用户的所有歌曲
