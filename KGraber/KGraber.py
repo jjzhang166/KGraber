@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
 from bs4 import BeautifulSoup as BS
@@ -191,7 +191,7 @@ class KGraber:
         self.getAllSongs()
    
 
-if __name__ == '__main__':
+def grabe():
     KGraber().grabeSongs()
     
 

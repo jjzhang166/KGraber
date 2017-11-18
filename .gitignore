@@ -1,3 +1,4 @@
 *.pyc
 songs/
 .vscode/
+*.egg-info/
