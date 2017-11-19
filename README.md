@@ -43,6 +43,10 @@ $ pyinstaller --clean -F --workpath release --specpath release --distpath releas
 **Enjoy It**
 
 
+如果觉得这个项目还不错，也可以打赏一下我去买个泡面 -_-#:
+
+![tip](./tip.png)
+
 
 
 
