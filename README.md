@@ -12,13 +12,13 @@ Email: 824219521@qq.com
 ## 安装
 
 ```
-pip install -e .
+$ pip install -e .
 ```
 
 ## 使用
 
 ```
-KGraber
+$ KGraber
 ```
 
 - 要使用`全民K歌`手机App内置的二维码扫码功能
