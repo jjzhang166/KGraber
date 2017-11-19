@@ -1,7 +1,12 @@
 *.pyc
+*.spec
 songs/
 .vscode/
 *.egg-info/
 build/
 dist/
 venv/
+.DS_Store
+__pycache__/
+release/KGraber/
+

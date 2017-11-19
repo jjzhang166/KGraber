@@ -26,6 +26,20 @@ $ KGraber
 - 脚本创建名为`songs`的目录保存已下载的用户歌曲
 
 
+## 编译的二进制 - 以mac上为例
+
+```
+$ pip install -r requirements.txt
+$ pip install .
+$ pyinstaller --clean -F --workpath release --specpath release --distpath release/mac_x64 -n KGraber release.py
+```
+
+## 下载
+
+- [mac_x64](./release/mac_x64/KGraber)
+- [windows_x64](./release/windows_x64/KGraber.exe)
+- [linux_armv7](./release/linux_armv7/KGraber)
+
 **Enjoy It**
 
 

@@ -212,11 +212,10 @@ class KGraber:
 
     def exit(self,signum,frame):
         print("\nforce exit")
-        exit(0)
+        sys.exit()  
 
     def grabeSongs(self):
         signal.signal(signal.SIGINT, self.exit)  
-        signal.signal(signal.SIGTERM, self.exit) 
         self.show_qrcode()
         self.scan_login()
         self.login_info()
