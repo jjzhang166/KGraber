@@ -87,49 +87,54 @@ class KGraber:
             self.sig = data['sig']
     
             qrInfo =  r'http://kg.qq.com/m.html?' + self.encodeQuery(data)
-            qrImg = qrcode.make(qrInfo)
-            qrImg.show()
-            self.input('If you have scaned the qrcode with App and logged in, enter any key to continue')
-            print("Start Download")
+            self.qrImg = qrcode.make(qrInfo)
+            self.qrImg.show()
+            self.input('If you have scaned the qrcode with App and logged in, enter any key to continue ...')
         else:
             print("Can not get the qrInfo")
 
     def scan_login(self):
-            payload = {
-                'uin':0,
-                'loginUin':0,
-                'hostUin':0,
-                'format':'fs',
-                'inCharset':'GB2312',
-                'outCharset':'utf-8',
-                'notice':0,
-                'platform':'activity',
-                'needNewCode':0,
-                'g_tk':5381,
-                'g_tk_openkey':5381,
-                'code':self.code,
-                'sig':self.sig,
-                'g_tk_qrsig':self.getACSRFToken(self.qrsig),
-                'qzreferrer':'http://kg.qq.com/'
-            }
-            pvid = str(self.getpvid())
-            headers = {
-                'Host': 'node.kg.qq.com',
-                'Connection': 'keep-alive',
-                'Content-Length': '315',
-                'Cache-Control': 'max-age=0',
-                'Origin': 'http://imgcache.qq.com',
-                'Upgrade-Insecure-Requests': '1',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-                'Referer': 'http://imgcache.qq.com/music/miniportal_v4/tool/html/fp_utf8.html',
-                'Accept-Encoding': 'gzip, deflate',
-                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                'Cookie': 'pgv_pvid=%s; pgv_info=ssid=s%s; qrsig=%s' % (pvid,pvid,self.qrsig)
-            }
-            scan_login_url = self.login_scan_endPoint + '?' + self.encodeQuery({'g_tk':5381})
-            self.session.post(scan_login_url,data = payload,headers=headers).content.decode('utf-8')
+        payload = {
+            'uin':0,
+            'loginUin':0,
+            'hostUin':0,
+            'format':'fs',
+            'inCharset':'GB2312',
+            'outCharset':'utf-8',
+            'notice':0,
+            'platform':'activity',
+            'needNewCode':0,
+            'g_tk':5381,
+            'g_tk_openkey':5381,
+            'code':self.code,
+            'sig':self.sig,
+            'g_tk_qrsig':self.getACSRFToken(self.qrsig),
+            'qzreferrer':'http://kg.qq.com/'
+        }
+        pvid = str(self.getpvid())
+        headers = {
+            'Host': 'node.kg.qq.com',
+            'Connection': 'keep-alive',
+            'Content-Length': '315',
+            'Cache-Control': 'max-age=0',
+            'Origin': 'http://imgcache.qq.com',
+            'Upgrade-Insecure-Requests': '1',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Referer': 'http://imgcache.qq.com/music/miniportal_v4/tool/html/fp_utf8.html',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Cookie': 'pgv_pvid=%s; pgv_info=ssid=s%s; qrsig=%s' % (pvid,pvid,self.qrsig)
+        }
+        scan_login_url = self.login_scan_endPoint + '?' + self.encodeQuery({'g_tk':5381})
+        response = self.session.post(scan_login_url,data = payload,headers=headers).content.decode('utf-8')
+        startIndex = response.find('(') + 1
+        endIndex = response.find(')')
+        response = response[startIndex : endIndex]
+        response = eval(response)
+        return response
+
 
     def login_info(self):
         self.g_tk_openkey = self.getACSRFToken(self.session.cookies.get('openkey'))
@@ -213,11 +218,17 @@ class KGraber:
     def exit(self,signum,frame):
         print("\nforce exit")
         sys.exit()  
+        
+    def check_login(self):
+        while self.scan_login()['code'] != 0:
+            self.qrImg.show()
+            self.input("You have not logged in with your app, when ready, enter any key to continue ...")
+        print('Start Download')
 
     def grabeSongs(self):
         signal.signal(signal.SIGINT, self.exit)  
         self.show_qrcode()
-        self.scan_login()
+        self.check_login()
         self.login_info()
         self.getAllSongs()
    
