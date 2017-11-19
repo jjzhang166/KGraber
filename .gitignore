@@ -4,3 +4,4 @@ songs/
 *.egg-info/
 build/
 dist/
+venv/

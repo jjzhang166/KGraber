@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# coding=utf-8
-
 from setuptools import setup, find_packages
 
 setup(
@@ -19,9 +16,7 @@ setup(
     url='https://github.com/wangzhizhou/KGraber',
     classifiers=[
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3.x',
-        'Topic :: Software Development :: application'
+        'Programming Language :: Python'
     ],
     install_requires=[
         'beautifulsoup4',

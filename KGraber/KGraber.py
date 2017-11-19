@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-#-*- coding:utf-8 -*-
-
 from bs4 import BeautifulSoup as BS
 import time
 import random
@@ -12,6 +9,8 @@ import json
 import math
 import os
 import shutil
+import sys
+import signal
 
 class KGraber:
 
@@ -20,20 +19,44 @@ class KGraber:
     login_info_endPoint = r'http://node.kg.qq.com/cgi/fcgi-bin/fcg_login_info'
     user_homepage_endPoint = r'http://node.kg.qq.com/cgi/fcgi-bin/kg_ugc_get_homepage'
     
+    def encodeQuery(self,query):
+        if 2 == sys.version_info.major:
+            return urllib.urlencode(query)
+        else:
+            return urllib.parse.urlencode(query)
+    def parseUrl(self,url):
+        if 2 == sys.version_info.major:
+            import urlparse
+            return urlparse.urlparse(url)
+        else:
+            return urllib.parse.urlparse(url)
+    def parseQuery(self,query):
+        if 2 == sys.version_info.major:
+            import urlparse
+            return urlparse.parse_qs(query)
+        else:
+            return urllib.parse.parse_qs(query)
+    def input(self,msg):
+        if 2 == sys.version_info.major:
+            return raw_input(msg)
+        else:
+            return input(msg)
+
     def getTimestamp(self):
         return int(time.time()*1000)
 
     def getACSRFToken(self,e):
         t=5381
-        for ch in e:
-          t += (t << 5) + ord(ch)
+        if e:
+            for ch in e:
+              t += (t << 5) + ord(ch)
         return 2147483647 & t
 
     def getpvid(self):
         return int(round(2147483647 * random.random()) * self.getTimestamp() % 1e10)
 
     def show_qrcode(self):
-        query = {\
+        query = {
                 'jsonpCallback':'response',
                 'charset':'utf-8',
                 'inCharset':'GB2312',
@@ -44,7 +67,7 @@ class KGraber:
                 'nocache':random.random()
                 }
         self.query = query
-        qrInfoUrl = self.login_code_endPoint + '?' + urllib.parse.urlencode(query)
+        qrInfoUrl = self.login_code_endPoint + '?' + self.encodeQuery(query)
         self.session = requests.Session()
         pvid = str(self.getpvid())
         self.session.cookies.set('pgv_pvid', pvid)
@@ -61,10 +84,11 @@ class KGraber:
             self.code = data['code']
             self.sig = data['sig']
     
-            qrInfo =  r'http://kg.qq.com/m.html?' + urllib.parse.urlencode(data)
+            qrInfo =  r'http://kg.qq.com/m.html?' + self.encodeQuery(data)
             qrImg = qrcode.make(qrInfo)
-            qrImg.show('Please use the QuMinKeGe App Scan and logged in')
-            input('If you have scaned the qrcode with App and logged in, enter any key to continue')
+            qrImg.show()
+            self.input('If you have scaned the qrcode with App and logged in, enter any key to continue')
+            print("Start Download")
         else:
             print("Can not get the qrInfo")
 
@@ -102,13 +126,13 @@ class KGraber:
                 'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
                 'Cookie': 'pgv_pvid=%s; pgv_info=ssid=s%s; qrsig=%s' % (pvid,pvid,self.qrsig)
             }
-            scan_login_url = self.login_scan_endPoint + '?' + urllib.parse.urlencode({'g_tk':5381})
+            scan_login_url = self.login_scan_endPoint + '?' + self.encodeQuery({'g_tk':5381})
             self.session.post(scan_login_url,data = payload,headers=headers).content.decode('utf-8')
 
     def login_info(self):
         self.g_tk_openkey = self.getACSRFToken(self.session.cookies.get('openkey'))
         self.query['g_tk_openkey'] = self.g_tk_openkey
-        login_info_url = self.login_info_endPoint + '?' + urllib.parse.urlencode(self.query)
+        login_info_url = self.login_info_endPoint + '?' + self.encodeQuery(self.query)
         response = self.session.get(login_info_url).content.decode('utf-8')
         self.uid = self.session.cookies.get('muid')
 
@@ -131,7 +155,7 @@ class KGraber:
                     'g_tk_openkey':self.g_tk_openkey,
                     '_':self.getTimestamp()
                     }
-            user_songs_url = self.user_homepage_endPoint + '?' + urllib.parse.urlencode(query)
+            user_songs_url = self.user_homepage_endPoint + '?' + self.encodeQuery(query)
             response = requests.get(user_songs_url).content.decode('utf-8')
             startIndex = len(query['jsonpCallback']) + 1
             endIndex = len(response)-1
@@ -162,9 +186,9 @@ class KGraber:
                 jsonStr=info[info.index('=')+1:len(info)]
                 songInfo=json.loads(jsonStr)
                 playUrl=songInfo['detail']['playurl']
-                path = urllib.parse.urlparse(playUrl).path
-                query = urllib.parse.urlparse(playUrl).query
-                query = urllib.parse.parse_qs(query)
+                path = self.parseUrl(playUrl).path
+                query = self.parseUrl(playUrl).query
+                query = self.parseQuery(query)
                 if 'fname' in query:
                     fname = query['fname'][0]
                     ext = fname[fname.rfind('.'):]
@@ -184,7 +208,13 @@ class KGraber:
 
         print('Download Completed! The songs directory store all your songs, enjoy it! ;-D')
 
+    def exit(self,signum,frame):
+        print("\nforce exit")
+        exit(0)
+
     def grabeSongs(self):
+        signal.signal(signal.SIGINT, self.exit)  
+        signal.signal(signal.SIGTERM, self.exit) 
         self.show_qrcode()
         self.scan_login()
         self.login_info()
