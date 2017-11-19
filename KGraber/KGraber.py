@@ -87,8 +87,8 @@ class KGraber:
             self.sig = data['sig']
     
             qrInfo =  r'http://kg.qq.com/m.html?' + self.encodeQuery(data)
-            self.qrImg = qrcode.make(qrInfo)
-            self.qrImg.show()
+            qrImg = qrcode.make(qrInfo)
+            qrImg.show()
             self.input('If you have scaned the qrcode with App and logged in, enter any key to continue ...')
         else:
             print("Can not get the qrInfo")
@@ -145,6 +145,7 @@ class KGraber:
 
  
     def getAllSongs(self):
+        print('Start Download, Please wait ...')
         self.ugclist = {}
         flag = True
         while flag :
@@ -221,9 +222,7 @@ class KGraber:
         
     def check_login(self):
         while self.scan_login()['code'] != 0:
-            self.qrImg.show()
-            self.input("You have not logged in with your app, when ready, enter any key to continue ...")
-        print('Start Download')
+            self.show_qrcode()
 
     def grabeSongs(self):
         signal.signal(signal.SIGINT, self.exit)  
