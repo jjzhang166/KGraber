@@ -36,9 +36,9 @@ $ pyinstaller --clean -F --workpath release --specpath release --distpath releas
 
 ## 下载
 
-- [mac_x64](./release/mac_x64/KGraber)
-- [windows_x64](./release/windows_x64/KGraber.exe)
-- [linux_armv7](./release/linux_armv7/KGraber)
+- <a href="./release/mac_x64/KGraber">mac_x64</a>
+- <a href="./release/windows_x64/KGraber.exe">windows_x64</a>
+- <a href="./release/linux_armv7/KGraber">linux_armv7</a>
 
 **Enjoy It**
 
