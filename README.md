@@ -40,6 +40,8 @@ $ pyinstaller --clean -F --workpath release --specpath release --distpath releas
 - [windows_x64](https://github.com/wangzhizhou/KGraber/raw/master/release/windows_x64/KGraber.exe)
 - [linux_armv7](https://github.com/wangzhizhou/KGraber/raw/master/release/linux_armv7/KGraber)
 
+Mac/Linux下需要给文件开启执行权限： `$ sudo chmod u+x KGraber`
+
 **Enjoy It**
 
 
