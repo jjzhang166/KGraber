@@ -9,6 +9,10 @@ Email: 824219521@qq.com
 
 ---
 
+# Python 方式
+    
+    如果你对python比较熟悉，可以使用这种方式
+
 ## 安装
 
 ```
@@ -26,21 +30,26 @@ $ KGraber
 - 脚本创建名为`songs`的目录保存已下载的用户歌曲
 
 
-## 编译的二进制 - 以mac上为例
+# 下载预编译二进制运行
+
+下载对应平台的可执行文件后，在Mac/Linux下需要给文件开启执行权限： `$ sudo chmod u+x KGraber`后，再在终端中运行。在Windows下可以直接点击`.exe`文件执行。
+
+## 下载
+
+- [mac_x64](https://github.com/wangzhizhou/KGraber/raw/master/release/mac_x64/KGraber)
+
+- [windows_x64](https://github.com/wangzhizhou/KGraber/raw/master/release/windows_x64/KGraber.exe)
+
+- [linux_armv7](https://github.com/wangzhizhou/KGraber/raw/master/release/linux_armv7/KGraber)
+
+
+# 编译二进制的方法 - 以mac上为例
 
 ```
 $ pip install -r requirements.txt
 $ pip install .
 $ pyinstaller --clean -F --workpath release --specpath release --distpath release/mac_x64 -n KGraber release.py
 ```
-
-## 下载
-
-- [mac_x64](https://github.com/wangzhizhou/KGraber/raw/master/release/mac_x64/KGraber)
-- [windows_x64](https://github.com/wangzhizhou/KGraber/raw/master/release/windows_x64/KGraber.exe)
-- [linux_armv7](https://github.com/wangzhizhou/KGraber/raw/master/release/linux_armv7/KGraber)
-
-Mac/Linux下需要给文件开启执行权限： `$ sudo chmod u+x KGraber`
 
 **Enjoy It**
 
