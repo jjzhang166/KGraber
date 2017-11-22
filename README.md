@@ -51,4 +51,9 @@ $ pip install .
 $ pyinstaller --clean -F --workpath release --specpath release --distpath release/mac_x64 -n KGraber release.py
 ```
 
+# 本包已提交到PyPi Index上，所以也可以使用下面方法安装
+
+```
+$ pip install KGraber
+```
 **Enjoy It**

@@ -3,3 +3,5 @@ requests
 qrcode
 pillow
 pyinstaller
+twine
+wheel

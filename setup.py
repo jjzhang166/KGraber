@@ -7,7 +7,7 @@ setup(
     description=(
         '这是一个用来从网页版全民K歌抓取用户自己作品并下载到本地的脚本'
     ),
-    long_description=open('README.md',encoding='utf-8').read(),
+    long_description=open('README.md').read(),
     author='王志舟<wangzhizhou>',
     author_email='824219521@qq.com',
     maintainer='王志舟',
