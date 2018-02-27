@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='KGraber',
-    version=1.0,
+    version=1.1,
     description=(
         '这是一个用来从网页版全民K歌抓取用户自己作品并下载到本地的脚本'
     ),
