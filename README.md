@@ -11,9 +11,7 @@ Email: 824219521@qq.com
 
 # Python 方式
     
-    如果你对python比较熟悉，可以使用这种方式
-
-## 安装
+    如果你对python比较熟悉，可以`clone`源码后，使用可编辑源码的方式安装该包，如下命令
 
 ```
 $ pip install -e .
