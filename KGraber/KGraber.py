@@ -86,7 +86,7 @@ class KGraber:
             self.code = data['code']
             self.sig = data['sig']
     
-            qrInfo =  r'http://kg.qq.com/m.html?' + self.encodeQuery(data)
+            qrInfo =  r'http://kg.qq.com/m.html?sig=%s&code=%s' % (self.sig,self.code)
             qrImg = qrcode.make(qrInfo)
             qrImg.show()
             self.input('If you have scaned the qrcode with App and logged in, enter any key to continue ...')
