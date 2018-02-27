@@ -70,3 +70,14 @@ $ pip install KGraber
 
 
 pipa: `d2FuZ3poaXpob3UrV3c1NDM4NTkyMzAK`
+
+
+# Release to pip
+
+```
+$ virtualenv venv
+$ . venv/bin/activate
+$ pip install -r requirements.txt
+$ python setup.py release
+$ twine upload dist/*
+```
