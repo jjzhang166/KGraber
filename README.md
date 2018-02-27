@@ -38,15 +38,27 @@ $ KGraber
 
 - [windows_x64](https://github.com/wangzhizhou/KGraber/raw/master/release/windows_x64/KGraber.exe)
 
-- [linux_armv7](https://github.com/wangzhizhou/KGraber/raw/master/release/linux_armv7/KGraber)
+# 在具体平台上编译二进制的方法
 
-
-# 编译二进制的方法 - 以mac上为例
+### 安装相关包
 
 ```
+$ virtualenv venv
+$ . venv/bin/activate
 $ pip install -r requirements.txt
-$ pip install .
+$ pip install -e .
+```
+
+### Mac平台
+
+```
 $ pyinstaller --clean -F --workpath release --specpath release --distpath release/mac_x64 -n KGraber release.py
+```
+
+### Windows 平台
+
+```
+$ pyinstaller --clean -F --workpath release --specpath release --distpath release/windows_x64 -n KGraber.exe release.py
 ```
 
 # 本包已提交到PyPi Index上，所以也可以使用下面方法安装
@@ -55,3 +67,6 @@ $ pyinstaller --clean -F --workpath release --specpath release --distpath releas
 $ pip install KGraber
 ```
 **Enjoy It**
+
+
+pipa: `d2FuZ3poaXpob3UrV3c1NDM4NTkyMzAK`
